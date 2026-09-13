@@ -27,188 +27,27 @@ export default function HomePage() {
           fetch("/api/movies").then((r) => r.json()).catch(() => null),
           fetch("/api/cinemas").then((r) => r.json()).catch(() => null),
         ]);
-        if (moviesRes?.movies) setMovies(moviesRes.movies);
-        if (cinemasRes?.cinemas) setCinemas(cinemasRes.cinemas);
-      } catch {}
-      setLoading(false);
-    }
 
-      // Load through client-side DataService or API
-      const moviesList: MovieItem[] = [
-        {
-          id: "m-runner-001",
-          title: "Runner",
-          slug: "runner",
-          description: "Starring Alan Ritchson (Reacher), a high-octane action thriller following a former elite operative thrust into a 3-hour race against time across a lockdown city to neutralize a corrupt syndicate threatening millions.",
-          posterUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80",
-          backdropUrl: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1920&q=80",
-          trailerUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          durationMinutes: 124,
-          rating: "R",
-          language: "English",
-          director: "Scott Waugh",
-          cast: "Alan Ritchson, Alexandra Daddario, Karl Urban, Djimon Hounsou",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 1,
-          genres: ["Action", "Thriller"],
-        },
-        {
-          id: "m-avengers-002",
-          title: "Avengers: Doomsday",
-          slug: "avengers-doomsday",
-          description: "Earth's mightiest heroes face an unprecedented cosmic extinction threat as Victor Von Doom emerges from the multiverse. An epic scale confrontation redefining the Marvel Cinematic Universe.",
-          posterUrl: "/images/movies/avengers-doomsday.jpg",
-          backdropUrl: "/images/movies/avengers-doomsday.jpg",
-          trailerUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          durationMinutes: 168,
-          rating: "PG-13",
-          language: "English",
-          director: "Anthony & Joe Russo",
-          cast: "Robert Downey Jr., Benedict Cumberbatch, Pedro Pascal, Florence Pugh, Anthony Mackie",
-          releaseDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
-          status: "COMING_SOON",
-          featured: 1,
-          genres: ["Action", "Sci-Fi", "Adventure"],
-        },
-        {
-          id: "m-dune2-003",
-          title: "Dune: Part Two",
-          slug: "dune-part-two",
-          description: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family, facing a choice between love and the fate of the universe.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/xOMo8BRK7PfcJv9JCnx7s520b4q.jpg",
-          trailerUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          durationMinutes: 166,
-          rating: "PG-13",
-          language: "English (Dolby Atmos)",
-          director: "Denis Villeneuve",
-          cast: "Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem, Austin Butler",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 1,
-          genres: ["Sci-Fi", "Adventure", "Drama", "IMAX"],
-        },
-        {
-          id: "m-oppen-004",
-          title: "Oppenheimer",
-          slug: "oppenheimer",
-          description: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during the Manhattan Project.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/fm6K9vYQ7jSS2Zq09bm9o9Wuj8n.jpg",
-          durationMinutes: 180,
-          rating: "R",
-          language: "English",
-          director: "Christopher Nolan",
-          cast: "Cillian Murphy, Emily Blunt, Matt Damon, Robert Downey Jr., Florence Pugh",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 0,
-          genres: ["Drama", "Thriller", "IMAX"],
-        },
-        {
-          id: "m-gladiator2-005",
-          title: "Gladiator II",
-          slug: "gladiator-ii",
-          description: "Years after witnessing the death of Maximus, Lucius must enter the Colosseum after his home is conquered by the tyrannical Emperors who now lead Rome with an iron fist.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/euYI6ub299v5qW297x69m7EiY8P.jpg",
-          durationMinutes: 148,
-          rating: "R",
-          language: "English",
-          director: "Ridley Scott",
-          cast: "Paul Mescal, Pedro Pascal, Denzel Washington, Connie Nielsen",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 0,
-          genres: ["Action", "Drama", "Adventure"],
-        },
-        {
-          id: "m-deadpool-006",
-          title: "Deadpool & Wolverine",
-          slug: "deadpool-and-wolverine",
-          description: "A listless Wade Wilson toils away in civilian life until a threat to his home world sends him reluctantly teaming up with an even more reluctant Wolverine.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/yDHYTfa29tVe4HQDI5QCILvaZ2b.jpg",
-          durationMinutes: 128,
-          rating: "R",
-          language: "English",
-          director: "Shawn Levy",
-          cast: "Ryan Reynolds, Hugh Jackman, Emma Corrin, Matthew Macfadyen",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 0,
-          genres: ["Action", "Comedy", "Sci-Fi"],
-        },
-        {
-          id: "m-spider-007",
-          title: "Spider-Man: Beyond the Spider-Verse",
-          slug: "spider-man-beyond-the-spider-verse",
-          description: "Miles Morales journeys across the multiverse to battle the Spot and save every universe from catastrophic collapse.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
-          durationMinutes: 140,
-          rating: "PG",
-          language: "English",
-          director: "Joaquim Dos Santos, Kemp Powers",
-          cast: "Shameik Moore, Hailee Steinfeld, Oscar Isaac, Daniel Kaluuya",
-          releaseDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
-          status: "COMING_SOON",
-          featured: 0,
-          genres: ["Animation", "Action", "Sci-Fi"],
-        },
-        {
-          id: "m-inter-008",
-          title: "Interstellar",
-          slug: "interstellar",
-          description: "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
-          posterUrl: "https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-          backdropUrl: "https://image.tmdb.org/t/p/original/rAiYTsqAl3KP8AWkX1eG1Ugr0Xm.jpg",
-          durationMinutes: 169,
-          rating: "PG-13",
-          language: "English (IMAX 70mm)",
-          director: "Christopher Nolan",
-          cast: "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",
-          releaseDate: new Date().toISOString(),
-          status: "NOW_SHOWING",
-          featured: 0,
-          genres: ["Sci-Fi", "Drama", "IMAX"],
-        },
-      ];
+        if (moviesRes?.movies && moviesRes.movies.length > 0) {
+          setMovies(moviesRes.movies);
+        } else {
+          const { cineStore } = await import("@/lib/data-service");
+          setMovies(cineStore.movies);
+        }
 
-      const cinemasList: CinemaItem[] = [
-        {
-          id: "c-grand-imax-001",
-          name: "CineBook Grand IMAX Cinema",
-          slug: "cinebook-grand-imax",
-          city: "New York",
-          address: "1540 Broadway, Times Square, New York, NY 10036",
-          imageUrl: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
-          amenities: ["IMAX Laser 70mm", "Dolby Atmos", "VIP Dine-In Loungers", "Bar & Lounge"],
-        },
-        {
-          id: "c-starlight-002",
-          name: "Starlight Luxury Cineplex",
-          slug: "starlight-luxury-cineplex",
-          city: "Los Angeles",
-          address: "6801 Hollywood Blvd, Hollywood, CA 90028",
-          imageUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80",
-          amenities: ["4DX Motion Seats", "Dolby Cinema", "Heated Recliners"],
-        },
-        {
-          id: "c-neotokyo-003",
-          name: "Neo Tokyo Dolby Theater",
-          slug: "neo-tokyo-dolby-theater",
-          city: "San Francisco",
-          address: "1000 Van Ness Ave, San Francisco, CA 94109",
-          imageUrl: "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?auto=format&fit=crop&w=1200&q=80",
-          amenities: ["Dolby Atmos Sound", "Laser Projection", "Couple Sofas"],
-        },
-      ];
-
-      setMovies(moviesList);
-      setCinemas(cinemasList);
-      setLoading(false);
+        if (cinemasRes?.cinemas && cinemasRes.cinemas.length > 0) {
+          setCinemas(cinemasRes.cinemas);
+        } else {
+          const { cineStore } = await import("@/lib/data-service");
+          setCinemas(cineStore.cinemas);
+        }
+      } catch {
+        const { cineStore } = await import("@/lib/data-service");
+        setMovies(cineStore.movies);
+        setCinemas(cineStore.cinemas);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
