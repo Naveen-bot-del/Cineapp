@@ -24,13 +24,14 @@ export default function HomePage() {
     async function loadData() {
       try {
         const [moviesRes, cinemasRes] = await Promise.all([
-          fetch("/api/admin/movies").catch(() => null), // or mock fetch
-          fetch("/api/cinemas").catch(() => null),
+          fetch("/api/movies").then((r) => r.json()).catch(() => null),
+          fetch("/api/cinemas").then((r) => r.json()).catch(() => null),
         ]);
-
-        // Direct client query or standard fetch
-        const res = await fetch("/api/auth/me"); // touch server
+        if (moviesRes?.movies) setMovies(moviesRes.movies);
+        if (cinemasRes?.cinemas) setCinemas(cinemasRes.cinemas);
       } catch {}
+      setLoading(false);
+    }
 
       // Load through client-side DataService or API
       const moviesList: MovieItem[] = [
