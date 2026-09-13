@@ -242,101 +242,130 @@ export default function HomePage() {
     <div className="flex flex-col gap-16 pb-20">
       {/* Hero Showcase Section */}
       {currentHeroMovie && (
-        <section className="relative w-full h-[70vh] min-h-[540px] max-h-[750px] overflow-hidden">
-          {/* Backdrop Image */}
-          <div className="absolute inset-0">
+        <section className="relative w-full min-h-[580px] lg:min-h-[640px] overflow-hidden flex items-center py-10">
+          {/* Ambient Blurred Cinematic Backdrop */}
+          <div className="absolute inset-0 -z-10">
             <img
               src={currentHeroMovie.backdropUrl}
               alt={currentHeroMovie.title}
-              className="w-full h-full object-cover object-center animate-fade-in filter brightness-75 scale-105 transition-all duration-700"
+              className="w-full h-full object-cover object-center filter brightness-[0.25] blur-md scale-110 transition-all duration-700"
             />
-            {/* Ambient Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+            {/* Ambient Dark Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent" />
           </div>
 
-          <div className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
-            <div className="max-w-2xl space-y-5">
-              {/* Badge */}
-              <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-xs font-black bg-brand-500 text-white uppercase tracking-widest shadow-glow flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5" />
-                  {currentHeroMovie.status === "COMING_SOON" ? "Most Anticipated" : "Now in Theaters"}
-                </span>
-                <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-white/10 backdrop-blur-md text-white">
-                  {currentHeroMovie.rating}
-                </span>
-                <span className="text-xs text-slate-300 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  {currentHeroMovie.durationMinutes} min
-                </span>
-              </div>
-
-              {/* Title */}
-              <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none drop-shadow-2xl">
-                {currentHeroMovie.title}
-              </h1>
-
-              {/* Description */}
-              <p className="text-sm sm:text-base text-slate-300 line-clamp-3 leading-relaxed">
-                {currentHeroMovie.description}
-              </p>
-
-              {/* Cast */}
-              {currentHeroMovie.cast && (
-                <div className="text-xs text-slate-400">
-                  <span className="text-slate-200 font-semibold">Starring: </span>
-                  {currentHeroMovie.cast}
+          <div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              {/* Left Column: Movie Info & CTAs (7 cols) */}
+              <div className="lg:col-span-7 space-y-6">
+                {/* Badges */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="px-3.5 py-1.5 rounded-full text-xs font-black bg-brand-500 text-white uppercase tracking-widest shadow-glow flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5" />
+                    {currentHeroMovie.status === "COMING_SOON" ? "Most Anticipated" : "Now in Theaters"}
+                  </span>
+                  <span className="px-2.5 py-1 rounded-md text-xs font-black bg-white/10 backdrop-blur-md text-white border border-white/10">
+                    {currentHeroMovie.rating}
+                  </span>
+                  <span className="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
+                    <Clock className="w-4 h-4 text-cinema-gold" />
+                    {currentHeroMovie.durationMinutes} min
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    • {currentHeroMovie.genres.join(", ")}
+                  </span>
                 </div>
-              )}
 
-              {/* CTA Buttons */}
-              <div className="flex items-center gap-4 pt-2">
-                <Link
-                  href={`/movies/${currentHeroMovie.slug}`}
-                  className="px-7 py-3.5 rounded-xl font-bold text-sm bg-brand-500 hover:bg-brand-600 text-white shadow-glow hover:shadow-brand-500/40 transition-all hover:scale-105 flex items-center gap-2"
-                >
-                  <Ticket className="w-4 h-4" />
-                  {currentHeroMovie.status === "COMING_SOON" ? "View Details & Remind" : "Book Tickets"}
-                </Link>
+                {/* Title */}
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-none drop-shadow-2xl">
+                  {currentHeroMovie.title}
+                </h1>
 
-                <a
-                  href={currentHeroMovie.trailerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3.5 rounded-xl font-semibold text-sm bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/10 transition-all flex items-center gap-2"
-                >
-                  <Play className="w-4 h-4 text-brand-400 fill-brand-400" />
-                  Watch Trailer
-                </a>
-              </div>
-            </div>
+                {/* Description */}
+                <p className="text-sm sm:text-base text-slate-300 line-clamp-3 leading-relaxed max-w-2xl">
+                  {currentHeroMovie.description}
+                </p>
 
-            {/* Hero Carousel Navigation Thumbnails */}
-            <div className="absolute bottom-8 right-4 sm:right-8 hidden md:flex items-center gap-3">
-              {featuredMovies.map((movie, idx) => (
-                <button
-                  key={movie.id}
-                  onClick={() => setHeroIndex(idx)}
-                  className={`flex items-center gap-3 p-2 rounded-xl transition-all ${
-                    heroIndex === idx
-                      ? "bg-surface-100/90 border border-brand-500/50 shadow-glow"
-                      : "bg-black/40 border border-white/5 opacity-60 hover:opacity-100"
-                  }`}
-                >
-                  <img
-                    src={movie.posterUrl}
-                    alt={movie.title}
-                    className="w-10 h-14 object-cover rounded-lg"
-                  />
-                  <div className="text-left pr-2">
-                    <div className="text-xs font-bold text-white max-w-[120px] truncate">
-                      {movie.title}
-                    </div>
-                    <div className="text-[10px] text-slate-400">{movie.genres[0]}</div>
+                {/* Cast */}
+                {currentHeroMovie.cast && (
+                  <div className="text-xs text-slate-400">
+                    <span className="text-slate-200 font-semibold">Starring: </span>
+                    {currentHeroMovie.cast}
                   </div>
-                </button>
-              ))}
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <Link
+                    href={`/movies/${currentHeroMovie.slug}`}
+                    className="px-8 py-3.5 rounded-xl font-bold text-sm bg-brand-500 hover:bg-brand-600 text-white shadow-glow hover:shadow-brand-500/40 transition-all hover:scale-105 flex items-center gap-2"
+                  >
+                    <Ticket className="w-4 h-4" />
+                    {currentHeroMovie.status === "COMING_SOON" ? "View Details & Remind" : "Book Tickets"}
+                  </Link>
+
+                  {currentHeroMovie.trailerUrl && (
+                    <a
+                      href={currentHeroMovie.trailerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3.5 rounded-xl font-semibold text-sm bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/10 transition-all flex items-center gap-2"
+                    >
+                      <Play className="w-4 h-4 text-brand-400 fill-brand-400" />
+                      Watch Trailer
+                    </a>
+                  )}
+                </div>
+
+                {/* Hero Carousel Navigation Thumbnails */}
+                <div className="pt-6 flex items-center gap-3">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mr-1">
+                    Featured:
+                  </span>
+                  {featuredMovies.map((movie, idx) => (
+                    <button
+                      key={movie.id}
+                      onClick={() => setHeroIndex(idx)}
+                      className={`flex items-center gap-2.5 p-1.5 pr-3 rounded-xl transition-all ${
+                        heroIndex === idx
+                          ? "bg-surface-100 border border-brand-500/60 shadow-glow"
+                          : "bg-surface-200/60 border border-white/5 opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <img
+                        src={movie.posterUrl}
+                        alt={movie.title}
+                        className="w-7 h-10 object-cover rounded-lg"
+                      />
+                      <div className="text-left">
+                        <div className="text-xs font-bold text-white max-w-[100px] truncate">
+                          {movie.title}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column: High-Res Full Size Original Poster (5 cols) */}
+              <div className="lg:col-span-5 flex justify-center lg:justify-end">
+                <div className="relative group max-w-[340px] sm:max-w-[380px] w-full aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/15 bg-surface-200 transition-all duration-500 hover:scale-[1.02] hover:border-brand-500/50 hover:shadow-brand-500/20">
+                  <img
+                    src={currentHeroMovie.posterUrl}
+                    alt={currentHeroMovie.title}
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <Link
+                      href={`/movies/${currentHeroMovie.slug}`}
+                      className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-brand-500 text-white shadow-glow"
+                    >
+                      Explore Movie
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
